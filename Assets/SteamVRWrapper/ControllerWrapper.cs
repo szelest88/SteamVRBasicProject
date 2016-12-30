@@ -18,6 +18,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
+        Debug.Log(""+controller.GetState().rAxis1.x);
         // TODO: implement
 	}
 
