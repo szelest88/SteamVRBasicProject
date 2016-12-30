@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ControllerWrapper : SteamVR_TrackedController {
 
-
+    public bool is_left;
     public SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)controllerIndex); } }
     public Vector3 velocity { get { return controller.velocity; } }
     public Vector3 angularVelocity { get { return controller.angularVelocity; } }
@@ -59,6 +59,10 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public override void OnPadTouched(ClickedEventArgs e)
     {
         base.OnPadTouched(e);
+        if (is_left)
+            Debug.Log("pad touched left!");
+        else
+            Debug.Log("pad touched right!");
     }
 
     public override void OnPadUntouched(ClickedEventArgs e)
