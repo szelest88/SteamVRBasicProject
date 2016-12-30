@@ -18,8 +18,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
-        Debug.Log(""+controller.GetState().rAxis1.x);
-        // TODO: implement
+        Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
+
+        if (padTouched) // while touched
+        {
+            
+                Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad));
+        }
 	}
 
     public override void OnTriggerClicked(ClickedEventArgs e)
@@ -57,13 +62,9 @@ public class ControllerWrapper : SteamVR_TrackedController {
         base.OnPadUnclicked(e);
     }
 
-    public override void OnPadTouched(ClickedEventArgs e)
+    public override void OnPadTouched(ClickedEventArgs e) // when did touched (i.e. wasn't touched before and now is, it's not continuous)
     {
         base.OnPadTouched(e);
-        if (is_left)
-            Debug.Log("pad touched left!");
-        else
-            Debug.Log("pad touched right!");
     }
 
     public override void OnPadUntouched(ClickedEventArgs e)
