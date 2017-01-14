@@ -19,7 +19,10 @@ public class ControllerWrapper : SteamVR_TrackedController {
 	protected override void Update () {
         base.Update();
         Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
-
+        //if (is_left)
+        //{
+        //    Debug.Log("position:" + transform.position.ToString("F4")); // if we want controller position (in global (?) coordinates)
+        //}
         if (padTouched) // while touched
         {
                 // by default, vector is printed with 1 floating point decimal, which is terribly incaurate. That's why "F2" is given in parameter.
