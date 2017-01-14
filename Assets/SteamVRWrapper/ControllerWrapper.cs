@@ -22,8 +22,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
         if (padTouched) // while touched
         {
-            
-                Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad));
+                // by default, vector is printed with 1 floating point decimal, which is terribly incaurate. That's why "F2" is given in parameter.
+                Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).ToString("F2"));
         }
 	}
 
