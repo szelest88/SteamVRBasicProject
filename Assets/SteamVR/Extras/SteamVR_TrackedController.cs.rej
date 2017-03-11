@@ -1,0 +1,10 @@
+diff a/Assets/SteamVR/Extras/SteamVR_TrackedController.cs b/Assets/SteamVR/Extras/SteamVR_TrackedController.cs	(rejected hunks)
+@@ -128,7 +128,7 @@
+     }
+ 
+     // Update is called once per frame
+-    protected virtual void Update()
++    void Update()
+     {
+ 		var system = OpenVR.System;
+ 		if (system != null && system.GetControllerState(controllerIndex, ref controllerState, (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t))))
