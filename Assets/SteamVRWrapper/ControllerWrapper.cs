@@ -18,21 +18,22 @@ public class ControllerWrapper : SteamVR_TrackedController {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
-        Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
+        //Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
         //if (is_left)
         //{
         //    Debug.Log("position:" + transform.position.ToString("F4")); // if we want controller position (in global (?) coordinates)
         //}
-        if (padTouched) // while touched
-        {
+        //if (padTouched) // while touched
+        //{
                 // by default, vector is printed with 1 floating point decimal, which is terribly incaurate. That's why "F2" is given in parameter.
-                Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).ToString("F2"));
-        }
+                //Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).ToString("F2"));
+        //}
 	}
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
         base.OnTriggerClicked(e);
+        Debug.Log("trigger clicked!"); // to be specific, when trigger in very high position - not the "click" itself
     }
 
     public override void OnTriggerUnclicked(ClickedEventArgs e)
