@@ -8,7 +8,24 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public Vector3 velocity { get { return controller.velocity; } }
     public Vector3 angularVelocity { get { return controller.angularVelocity; } }
 
-
+    IEnumerator LongVibration(float length, float strength)
+    {
+        for (float i = 0; i < length; i += Time.deltaTime)
+        {
+            controller.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+        yield return null;
+    }
+}
+    /// <summary>
+    /// Triggers the haptic feedback for the selected controller
+    /// </summary>
+    /// <param name="seconds">duration in seconds</param>
+    /// <param name="force">force from 0 to 1</param>
+    /// 
+    public void VrapperTriggerHaptics(float seconds, float force)
+    {
+        StartCoroutine(LongVibration(seconds, force));
+    }
     // Use this for initialization
     protected override void Start () {
         base.Start();
@@ -18,6 +35,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
+        
         //Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
         //if (is_left)
         //{
@@ -34,6 +52,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         base.OnTriggerClicked(e);
         Debug.Log("trigger clicked!"); // to be specific, when trigger in very high position - not the "click" itself
+        VrapperTriggerHaptics(0.1f,0.5f);
     }
 
     public override void OnTriggerUnclicked(ClickedEventArgs e)
