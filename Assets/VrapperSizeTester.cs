@@ -9,7 +9,7 @@ public class VrapperSizeTester : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ci = ChaperoneInfo.instance; // causes some logs to appear (with accurate data on play area size...)
-        ChaperoneInfo.Initialized.AddListener(new UnityEngine.Events.UnityAction(logInfoAboutSize));
+        ChaperoneInfo.Initialized.AddListener(new UnityEngine.Events.UnityAction(logInfoAboutSize)); // UnityAction is a void delegate
         
     }
 
