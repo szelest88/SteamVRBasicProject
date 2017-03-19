@@ -24,7 +24,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
     /// 
     public void VrapperTriggerHaptics(float seconds, float force)
     {
-        StartCoroutine(LongVibration(seconds, force));
+        if(gameObject.activeSelf) // marudził bez tego
+            StartCoroutine(LongVibration(seconds, force));
     }
     // Use this for initialization
     protected override void Start () {
