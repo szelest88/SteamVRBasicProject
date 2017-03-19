@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class TestEffectorScript : MonoBehaviour {
     public ControllerWrapper left, right;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         time = 0;
         doLeft = true;
+        if (left == null || right == null)
+        {
+            Debug.LogError("There is a testeffector script with no controllerwrapper object assigned!");
+        }
 	}
     float time;
     bool doLeft;
