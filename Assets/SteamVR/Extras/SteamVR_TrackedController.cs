@@ -127,6 +127,8 @@ public class SteamVR_TrackedController : MonoBehaviour
             Ungripped(this, e);
     }
 
+    /// <summary>
+
     // Update is called once per frame
     protected virtual void Update()
     {

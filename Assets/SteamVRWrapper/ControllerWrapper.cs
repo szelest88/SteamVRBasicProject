@@ -8,6 +8,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public Vector3 velocity { get { return controller.velocity; } }
     public Vector3 angularVelocity { get { return controller.angularVelocity; } }
 
+
+    /// position remembered when trigger pulled
+    /// </summary>
+    Vector3 savedControllerPosition;
+    Vector3 savedControllersDistance;
+
+
     IEnumerator LongVibration(float length, float strength)
     {
         for (float i = 0; i < length; i += Time.deltaTime)
@@ -31,12 +38,20 @@ public class ControllerWrapper : SteamVR_TrackedController {
     protected override void Start () {
         base.Start();
         // TODO: implement
+        scaleToSet = 1f;
 	}
-	
+    public float scaleToSet;
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
-        
+
+
+        if(triggerHold)
+        {
+            scaleToSet = (controller.transform.pos - savedControllerPosition).magnitude;
+        }
+        //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
+   
         //Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
         //if (is_left)
         //{
@@ -48,17 +63,25 @@ public class ControllerWrapper : SteamVR_TrackedController {
                 //Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).ToString("F2"));
         //}
 	}
+    public bool triggerHold = false;
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
+
         base.OnTriggerClicked(e);
         Debug.Log("trigger clicked!"); // to be specific, when trigger in very high position - not the "click" itself
         VrapperTriggerHaptics(0.1f,0.5f);
+     
+            triggerHold = true;
+
+        savedControllerPosition = controller.transform.pos;
+        Debug.LogError("saved position:" + savedControllerPosition.ToString("F4"));
     }
 
     public override void OnTriggerUnclicked(ClickedEventArgs e)
     {
         base.OnTriggerUnclicked(e);
+        triggerHold = false;
     }
 
     public override void OnMenuClicked(ClickedEventArgs e)

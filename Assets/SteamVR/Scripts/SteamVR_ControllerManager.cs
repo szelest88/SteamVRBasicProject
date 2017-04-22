@@ -22,8 +22,8 @@ public class SteamVR_ControllerManager : MonoBehaviour
 	uint leftIndex = OpenVR.k_unTrackedDeviceIndexInvalid;
 	uint rightIndex = OpenVR.k_unTrackedDeviceIndexInvalid;
 
-	// This needs to be called if you update left, right or objects at runtime (e.g. when dyanmically spawned).
-	public void UpdateTargets()
+    // This needs to be called if you update left, right or objects at runtime (e.g. when dyanmically spawned).
+    public void UpdateTargets()
 	{
 		// Add left and right entries to the head of the list so we only have to operate on the list itself.
 		var additional = (this.objects != null) ? this.objects.Length : 0;
