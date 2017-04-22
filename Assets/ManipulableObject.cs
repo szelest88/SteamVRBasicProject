@@ -35,7 +35,7 @@ public class ManipulableObject : MonoBehaviour {
                 transform.position = initialPosition + posToSet;
         }
 
-        if (left.gripped && right.gripped)
+        if (left.is_gripped && right.is_gripped)
         {
             this.scalingmode = true;
         }

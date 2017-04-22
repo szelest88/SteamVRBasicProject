@@ -75,7 +75,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
         //}
 	}
     public bool triggerHold = false;
-    public bool gripped;
+    public bool is_gripped;
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
@@ -152,13 +152,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
     public override void OnGripped(ClickedEventArgs e)
     {
-        gripped = true;
+        is_gripped = true;
         base.OnGripped(e);
     }
 
     public override void OnUngripped(ClickedEventArgs e)
     {
-        gripped = false;
+        is_gripped = false;
         base.OnUngripped(e);
     }
 }
