@@ -45,6 +45,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public bool scalingMode = false;
     public float scale = 1;
     public enum EnumKolor { Green, Red, Blue };
+    public enum ObjectType { Digger, Shooter};
+    ObjectType spawnedObjectType;
     float colorVal;
     // Update is called once per frame
     protected override void Update () {
@@ -94,6 +96,22 @@ public class ControllerWrapper : SteamVR_TrackedController {
             else if(val<=10)
                 transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
             colorVal = val;
+
+            if (val < 5)
+            {
+                spawnedObjectType = ObjectType.Digger;
+                transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(true);
+                transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.SetActive(false);
+
+
+            }
+            else
+            {
+                spawnedObjectType = ObjectType.Shooter;
+                transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(false);
+                transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.SetActive(true);
+
+            }
             //if (deltaX < 0)
             //    transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
             //else
@@ -158,16 +176,19 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         base.OnSteamClicked(e);
     }
-    public GameObject spawnableElement1;
+    public GameObject spawnableElement1, spawnableElement2;
     public GameObject parentObject;
     GameObject spawnedObject;
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
-        
+        if(colorVal<5)
         spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
+       else
+            spawnedObject = Instantiate(spawnableElement2, transform.position, Quaternion.identity, transform.transform);
+
         //spawnedObject.
-                        if (colorVal <= 2.5)
+        if (colorVal <= 2.5)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
         else if (colorVal <= 5)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
