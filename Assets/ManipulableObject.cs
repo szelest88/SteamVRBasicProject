@@ -16,15 +16,19 @@ public class ManipulableObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-//        Debug.LogError("state: " + left.triggerHold + ", " + right.triggerHold);
+        //        Debug.LogError("state: " + left.triggerHold + ", " + right.triggerHold);
 
         //    transform.localScale = new Vector3(left.triggerHold ? 2 : initialScale.x, right.triggerHold?2: initialScale.y, transform.localScale.z);
-       // transform.position = left.posToSet;
+        // transform.position = left.posToSet;
+        if (left.triggerHold && right.triggerHold)
+        {
+             transform.localRotation=Quaternion.LookRotation((left.transform.position-right.transform.position).normalized);
+
+            Debug.LogError("rotation:" + transform.localRotation);
+        } else if(right.triggerHold)
+
         if (posToSet != null &&  (! (posToSet.x==0 && posToSet.y==0 && posToSet.z==0)))
             transform.position = initialPosition+posToSet;
-        if (!left.triggerHold && !right.triggerHold)
-        {
-           // transform.localScale = initialScale;
-        }
+        
     }
 }
