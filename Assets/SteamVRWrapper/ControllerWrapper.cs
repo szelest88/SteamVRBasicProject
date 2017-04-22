@@ -131,16 +131,18 @@ public class ControllerWrapper : SteamVR_TrackedController {
     }
     public GameObject spawnableElement1;
     public GameObject parentObject;
+    GameObject spawnedObject;
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
         
-        Instantiate(spawnableElement1, transform.position, Quaternion.identity, parentObject.transform);
+        spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
     }
 
     public override void OnPadUnclicked(ClickedEventArgs e)
     {
         base.OnPadUnclicked(e);
+        spawnedObject.transform.SetParent(GameObject.Find("TestSphere").transform);
     }
 
     public override void OnPadTouched(ClickedEventArgs e) // when did touched (i.e. wasn't touched before and now is, it's not continuous)
