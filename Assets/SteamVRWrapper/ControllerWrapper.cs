@@ -42,6 +42,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
         posToSet = new Vector3();
 	}
     public Vector3 posToSet;
+    public bool scalingMode = false;
+    public float scale = 1;
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
@@ -52,6 +54,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
             if(mobject!=null)
             mobject.posToSet = (controller.transform.pos - savedControllerPosition);
         }
+
+        if (mobject.scalingmode)
+        {
+            float distance = (mobject.left.transform.position - mobject.right.transform.position).magnitude;
+            mobject.transform.localScale = new Vector3(distance, distance, distance);
+        }
+
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
    
         //Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
@@ -66,6 +75,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
         //}
 	}
     public bool triggerHold = false;
+    public bool gripped;
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
@@ -142,11 +152,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
     public override void OnGripped(ClickedEventArgs e)
     {
+        gripped = true;
         base.OnGripped(e);
     }
 
     public override void OnUngripped(ClickedEventArgs e)
     {
+        gripped = false;
         base.OnUngripped(e);
     }
 }

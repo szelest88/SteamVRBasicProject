@@ -7,9 +7,11 @@ public class ManipulableObject : MonoBehaviour {
     public ControllerWrapper right;
     public Vector3 posToSet;
     public Vector3 initialPosition;
+    public bool scalingmode;
 	// Use this for initialization
 	void Start () {
         initialPosition = transform.position;
+        scalingmode = false;
        // left.gameObject.transform.
     }
 	
@@ -22,13 +24,22 @@ public class ManipulableObject : MonoBehaviour {
         // transform.position = left.posToSet;
         if (left.triggerHold && right.triggerHold)
         {
-             transform.localRotation=Quaternion.LookRotation((left.transform.position-right.transform.position).normalized);
+            transform.localRotation = Quaternion.LookRotation((left.transform.position - right.transform.position).normalized);
 
             Debug.LogError("rotation:" + transform.localRotation);
-        } else if(right.triggerHold)
+        }
+        else if (right.triggerHold)
+        {
 
-        if (posToSet != null &&  (! (posToSet.x==0 && posToSet.y==0 && posToSet.z==0)))
-            transform.position = initialPosition+posToSet;
-        
+            if (posToSet != null && (!(posToSet.x == 0 && posToSet.y == 0 && posToSet.z == 0)))
+                transform.position = initialPosition + posToSet;
+        }
+
+        if (left.gripped && right.gripped)
+        {
+            this.scalingmode = true;
+        }
+        else
+            this.scalingmode = false;
     }
 }
