@@ -26,7 +26,7 @@ public class ManipulableObject : MonoBehaviour {
         {
             transform.localRotation = Quaternion.LookRotation((left.transform.position - right.transform.position).normalized);
 
-            Debug.LogError("rotation:" + transform.localRotation);
+     //       Debug.LogError("rotation:" + transform.localRotation);
         }
         else if (right.triggerHold)
         {

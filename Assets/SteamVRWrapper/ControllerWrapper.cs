@@ -44,8 +44,10 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public Vector3 posToSet;
     public bool scalingMode = false;
     public float scale = 1;
-	// Update is called once per frame
-	protected override void Update () {
+    public enum EnumKolor { Green, Red, Blue };
+    float colorVal;
+    // Update is called once per frame
+    protected override void Update () {
         base.Update();
 
 
@@ -55,27 +57,54 @@ public class ControllerWrapper : SteamVR_TrackedController {
          //   mobject.posToSet = (controller.transform.pos - savedControllerPosition);
         }
 
-        if (mobject.scalingmode)
+        if (mobject!=null && mobject.scalingmode)
         {
             float distance = (mobject.left.transform.position - mobject.right.transform.position).magnitude;
             mobject.transform.localScale = new Vector3(distance, distance, distance);
         }
 
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
-   
+
         //Debug.Log("trigger state: "+controller.GetState().rAxis1.x); // gets the trigger state (analog, 0-1)
         //if (is_left)
         //{
         //    Debug.Log("position:" + transform.position.ToString("F4")); // if we want controller position (in global (?) coordinates)
         //}
-        //if (padTouched) // while touched
-        //{
-                // by default, vector is printed with 1 floating point decimal, which is terribly incaurate. That's why "F2" is given in parameter.
-                //Debug.Log("pad touched:" + controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).ToString("F2"));
-        //}
-	}
+        Debug.Log("update");
+        // let's play:
+        if (!is_left && isTouched) // while touched
+        {
+            //   by default, vector is printed with 1 floating point decimal, which is terribly incaurate.That's why "F2" is given in parameter.
+            Vector2 touchPos = controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad);
+                Debug.Log("pad touched:" + touchPos.ToString("F2"));
+
+            Debug.Log("pad touch begin" + initialTouchCoordinates.ToString("F2"));
+            float deltaX = touchPos.x;
+            float val = ((deltaX + 1) * 5.0f);
+
+            Debug.LogError("pad debug val" + val);
+            Debug.LogError("pad debug color" + transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color);
+          //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
+            if (val<=2.5)
+                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
+            else if(val<=5)
+                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
+            else if(val<=7.5)
+                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
+            else if(val<=10)
+                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
+            colorVal = val;
+            //if (deltaX < 0)
+            //    transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
+            //else
+            //    transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.green;// SetColor("_Color", Color.green);
+            // rotate something of delta
+        }
+    }
     public bool triggerHold = false;
     public bool is_gripped;
+
+    public Vector2 savedTouchCoordinates;
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
@@ -137,6 +166,15 @@ public class ControllerWrapper : SteamVR_TrackedController {
         base.OnPadClicked(e);
         
         spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
+        //spawnedObject.
+                        if (colorVal <= 2.5)
+            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
+        else if (colorVal <= 5)
+            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
+        else if (colorVal <= 7.5)
+            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
+        else if (colorVal <= 10)
+            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
     }
 
     public override void OnPadUnclicked(ClickedEventArgs e)
@@ -144,15 +182,21 @@ public class ControllerWrapper : SteamVR_TrackedController {
         base.OnPadUnclicked(e);
         spawnedObject.transform.SetParent(GameObject.Find("TestSphere").transform);
     }
-
+    bool isTouched;
+    Vector2 initialTouchCoordinates;
     public override void OnPadTouched(ClickedEventArgs e) // when did touched (i.e. wasn't touched before and now is, it's not continuous)
     {
+        Debug.LogError("!"+e.padX);
         base.OnPadTouched(e);
+        isTouched = true;
+        initialTouchCoordinates = new Vector2(e.padX, e.padY);
     }
 
     public override void OnPadUntouched(ClickedEventArgs e)
     {
         base.OnPadUntouched(e);
+        isTouched = false;
+        initialTouchCoordinates = Vector2.zero;
     }
 
     public override void OnGripped(ClickedEventArgs e)
