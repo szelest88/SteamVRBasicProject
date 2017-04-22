@@ -129,10 +129,13 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         base.OnSteamClicked(e);
     }
-
+    public GameObject spawnableElement1;
+    public GameObject parentObject;
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
+        
+        Instantiate(spawnableElement1, transform.position, Quaternion.identity, parentObject.transform);
     }
 
     public override void OnPadUnclicked(ClickedEventArgs e)
