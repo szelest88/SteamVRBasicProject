@@ -5,9 +5,13 @@ using UnityEngine;
 
 namespace SmallWorld
 {
-    public class Receiver : MonoBehaviour
+    public class PayLoadStorage : MonoBehaviour
     {
+        [Tooltip("Type of payload (Const)")]
+        public PayLoadType PayLoadType;
+        [Tooltip("Max amount of payload (Const)")]
         public uint PayLoadMax;
+        [Tooltip("Current amount of payload (Var)")]
         public uint PayLoadCurrent;
 
         public uint PayLoadNeeded
@@ -18,20 +22,11 @@ namespace SmallWorld
             }
         }
 
-        public void ReceivePayLoad(Transporter transporter, uint payLoad)
+        public void ReceivePayLoad(UnityEngine.Object sender, uint payLoad)
         {
             PayLoadCurrent = Math.Min(PayLoadCurrent + payLoad, PayLoadMax);
-            Debug.LogFormat("Received payload. receiver: {0}, transporter: {1}, payload: {2}", name, transporter.name, payLoad);
+            Debug.LogFormat("Received payload. receiver: {0}, sender: {1}, payload: {2}", name, sender.name, payLoad);
         }
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
     }
 }
