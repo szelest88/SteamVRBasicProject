@@ -15,8 +15,8 @@ public class VrapperSizeTester : MonoBehaviour {
 
     // it's delayed
     void logInfoAboutSize() {
-        Debug.Log("Size X: " + ci.playAreaSizeX);
-        Debug.Log("Size Z: " + ci.playAreaSizeZ);
+       // Debug.Log("Size X: " + ci.playAreaSizeX);
+      //  Debug.Log("Size Z: " + ci.playAreaSizeZ);
         transform.localScale = new Vector3(ci.playAreaSizeX, 0.01f, ci.playAreaSizeZ);
     }
     // Update is called once per frame

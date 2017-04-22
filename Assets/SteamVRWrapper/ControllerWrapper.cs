@@ -49,7 +49,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
         if(triggerHold)
         {
-            posToSet = (controller.transform.pos - savedControllerPosition);
+            if(mobject!=null)
+            mobject.posToSet = (controller.transform.pos - savedControllerPosition);
         }
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
    
@@ -70,19 +71,38 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
 
         base.OnTriggerClicked(e);
-        Debug.Log("trigger clicked!"); // to be specific, when trigger in very high position - not the "click" itself
+      //  Debug.Log("trigger clicked!"); // to be specific, when trigger in very high position - not the "click" itself
         VrapperTriggerHaptics(0.1f,0.5f);
      
             triggerHold = true;
-
-        savedControllerPosition = mobject.transform.position;
+        if(mobject!=null)
+        savedControllerPosition = controller.transform.pos;
         Debug.LogError("saved position:" + savedControllerPosition.ToString("F4"));
     }
+
+    public void setCollision(Collider collision)
+    {
+        GameObject collidingGameObject = collision.gameObject;
+        isInCollision = true;
+        mobject = collidingGameObject.GetComponent<ManipulableObject>();
+        Debug.LogError("ENTER");
+    }
+    bool isInCollision = false;
+    public void unsetCollision(Collider collision)
+    {
+        isInCollision = false;
+        //collidingGameObject = null;
+        Debug.LogError("EXIT");
+    }
+
 
     public override void OnTriggerUnclicked(ClickedEventArgs e)
     {
         base.OnTriggerUnclicked(e);
         triggerHold = false;
+      //  if (isInCollision)
+            mobject.posToSet = (controller.transform.pos - savedControllerPosition);
+    //    mobject.initialPosition = mobject.transform.position;//local?
     }
 
     public override void OnMenuClicked(ClickedEventArgs e)
