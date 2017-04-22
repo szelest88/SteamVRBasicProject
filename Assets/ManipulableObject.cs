@@ -19,7 +19,7 @@ public class ManipulableObject : MonoBehaviour {
         Debug.LogError("state: " + left.triggerHold + ", " + right.triggerHold);
 
         //    transform.localScale = new Vector3(left.triggerHold ? 2 : initialScale.x, right.triggerHold?2: initialScale.y, transform.localScale.z);
-        transform.localPosition = new Vector3(left.scaleToSet, left.scaleToSet, left.scaleToSet);
+        transform.position = left.posToSet;
         if(!left.triggerHold && !right.triggerHold)
         {
            // transform.localScale = initialScale;

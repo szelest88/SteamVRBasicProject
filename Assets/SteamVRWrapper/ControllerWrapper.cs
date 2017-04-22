@@ -14,6 +14,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     Vector3 savedControllerPosition;
     Vector3 savedControllersDistance;
 
+    public ManipulableObject mobject;
 
     IEnumerator LongVibration(float length, float strength)
     {
@@ -38,9 +39,9 @@ public class ControllerWrapper : SteamVR_TrackedController {
     protected override void Start () {
         base.Start();
         // TODO: implement
-        scaleToSet = 1f;
+        posToSet = new Vector3();
 	}
-    public float scaleToSet;
+    public Vector3 posToSet;
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
@@ -48,7 +49,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
         if(triggerHold)
         {
-            scaleToSet = (controller.transform.pos - savedControllerPosition).magnitude;
+            posToSet = (controller.transform.pos - savedControllerPosition);
         }
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
    
@@ -74,7 +75,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
      
             triggerHold = true;
 
-        savedControllerPosition = controller.transform.pos;
+        savedControllerPosition = mobject.transform.position;
         Debug.LogError("saved position:" + savedControllerPosition.ToString("F4"));
     }
 
