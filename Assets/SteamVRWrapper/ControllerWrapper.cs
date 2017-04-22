@@ -51,8 +51,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
         if(triggerHold)
         {
-            if(mobject!=null)
-            mobject.posToSet = (controller.transform.pos - savedControllerPosition);
+         //   if(mobject!=null) // uncomment to enable translation
+         //   mobject.posToSet = (controller.transform.pos - savedControllerPosition);
         }
 
         if (mobject.scalingmode)
