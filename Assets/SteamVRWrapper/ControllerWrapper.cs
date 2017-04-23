@@ -59,9 +59,9 @@ public class ControllerWrapper : SteamVR_TrackedController {
          //   if(mobject!=null) // uncomment to enable translation
          //   mobject.posToSet = (controller.transform.pos - savedControllerPosition);
         }
-
         if (mobject!=null && mobject.scalingmode)
         {
+            
             float distance = (mobject.left.transform.position - mobject.right.transform.position).magnitude;
             parentObject.transform.localScale = new Vector3(distance, distance, distance);
             Debug.LogError(distance);
@@ -74,7 +74,6 @@ public class ControllerWrapper : SteamVR_TrackedController {
         //{
         //    Debug.Log("position:" + transform.position.ToString("F4")); // if we want controller position (in global (?) coordinates)
         //}
-        Debug.Log("update");
         // let's play:
         if (!is_left && isTouched) // while touched
         {
@@ -148,15 +147,12 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         GameObject collidingGameObject = collision.gameObject;
         isInCollision = true;
-        mobject = collidingGameObject.GetComponent<ManipulableObject>();
-        Debug.LogError("ENTER");
     }
     bool isInCollision = false;
     public void unsetCollision(Collider collision)
     {
         isInCollision = false;
         //collidingGameObject = null;
-        Debug.LogError("EXIT");
     }
 
 
@@ -237,5 +233,11 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         is_gripped = false;
         base.OnUngripped(e);
+    }
+
+    public void Awake()
+    {
+        if(!this.is_left)
+        mobject = parentObject.GetComponent<ManipulableObject>();
     }
 }

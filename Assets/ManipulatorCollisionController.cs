@@ -8,9 +8,6 @@ public class ManipulatorCollisionController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.LogError("trigger detected!");
-
-        Debug.LogError("COLLISION!");
         collidingObject = collision.gameObject;
         GetComponentInParent<ControllerWrapper>().setCollision(collision);
     }
