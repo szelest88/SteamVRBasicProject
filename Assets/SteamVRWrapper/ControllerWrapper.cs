@@ -199,7 +199,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public override void OnPadUnclicked(ClickedEventArgs e)
     {
         base.OnPadUnclicked(e);
-        spawnedObject.transform.SetParent(GameObject.Find("TestSphere").transform);
+        spawnedObject.transform.SetParent(GameObject.Find("GameController/Base").transform);
     }
     bool isTouched;
     Vector2 initialTouchCoordinates;
