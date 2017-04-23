@@ -23,10 +23,13 @@ namespace SmallWorld
         [Tooltip("Bullet prefab (Const)")]
         public Bullet BulletPrefab;
 
-		[Tooltip("Cannon mesh (Cosnt)")]
-		public GameObject CannonBody;
+        [Tooltip("Cannon mesh (Cosnt)")]
+        public GameObject CannonBody;
         [Tooltip("Cannon radar (Const)")]
         public CanonRadar CannonRadar;
+
+		[Tooltip("Cannon ready (Var readonly)")]
+        public bool CannonReady = true;
 
         public static void CreateAtPosition(Cannon cannonPrefab, Vector3 position, Transform parent, EnergySupplier energySupplier, MassSupplier massSupplier)
         {
@@ -43,41 +46,46 @@ namespace SmallWorld
 
         void Start()
         {
-			StartCoroutine(Shoot());
         }
 
         void Update()
         {
-			if (CannonRadar.TargetCurrent) {
-				var directionToTarget = (transform.position - CannonRadar.TargetCurrent.transform.position).normalized;
-				CannonBody.transform.rotation = Quaternion.LookRotation(directionToTarget);
-			}
-        }
-
-        IEnumerator Shoot()
-        {
-            while (true)
+            if (CannonRadar.TargetCurrent)
             {
-                var shootPossible = CannonRadar.TargetCurrent != null && EnergyStorage.PayLoadCurrent >= EnergyCostPerShoot && MassStorage.PayLoadCurrent >= MassCostPerShoot;
+                var directionToTarget = (transform.position - CannonRadar.TargetCurrent.transform.position).normalized;
+                CannonBody.transform.rotation = Quaternion.LookRotation(directionToTarget);
 
-                if (shootPossible)
-                {
-                    Bullet bullet = GameObject.Instantiate(
-                        BulletPrefab,
-                        transform.position,
-                        Quaternion.identity,
-                        transform
-                    );
-					Physics.IgnoreCollision(GetComponent<Collider>(), CannonRadar.TargetCurrent.GetComponent<Collider>());
 
-                    EnergyStorage.PayLoadCurrent -= EnergyCostPerShoot;
-                    MassStorage.PayLoadCurrent -= MassCostPerShoot;
-
-                    bullet.SeekTarget(CannonRadar.TargetCurrent);
-                }
-
-                yield return new WaitForSeconds(ShootingIntervalInSec);
             }
         }
+
+        void ShootAndReload()
+        {
+            var shootPossible = CannonReady && CannonRadar.TargetCurrent != null && EnergyStorage.PayLoadCurrent >= EnergyCostPerShoot && MassStorage.PayLoadCurrent >= MassCostPerShoot;
+
+            if (shootPossible)
+            {
+                Bullet bullet = GameObject.Instantiate(
+                    BulletPrefab,
+                    transform.position,
+                    Quaternion.identity,
+                    transform
+                );
+                Physics.IgnoreCollision(GetComponent<Collider>(), CannonRadar.TargetCurrent.GetComponent<Collider>());
+
+                EnergyStorage.PayLoadCurrent -= EnergyCostPerShoot;
+                MassStorage.PayLoadCurrent -= MassCostPerShoot;
+
+                bullet.SeekTarget(CannonRadar.TargetCurrent);
+
+				CannonReady = false;
+				StartCoroutine(Reload());
+            }
+        }
+
+		IEnumerator Reload() {
+			yield return new WaitForSeconds(ShootingIntervalInSec);
+			CannonReady = true;
+		}
     }
 }

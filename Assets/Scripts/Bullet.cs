@@ -42,9 +42,9 @@ namespace SmallWorld
 			}
         }
 
-        void OnCollisionEnter(Collision collision)
+        void OnTriggerEnter(Collider collider)
         {
-            var targetHit = collision.gameObject.GetInstanceID() == Target.gameObject.GetInstanceID();
+            var targetHit = collider.gameObject.GetInstanceID() == Target.gameObject.GetInstanceID();
             if (targetHit)
             {
                 Target.ApplyDamage(Damage);

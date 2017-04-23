@@ -28,14 +28,20 @@ namespace SmallWorld
         {
         }
 
-        void OnCollisionEnter(Collision collision)
+        void OnTriggerEnter(Collider collider)
         {
-            var targetHit = collision.gameObject.GetInstanceID() == Target.gameObject.GetInstanceID();
-            if (targetHit)
-            {
-                Target.ApplyDamage(Damage);
-                Destroy(gameObject);
-            }
+            // var targetHit = collider.gameObject.GetInstanceID() == Target.gameObject.GetInstanceID();
+            // if (targetHit)
+            // {
+            //     Target.ApplyDamage(Damage);
+            //     Destroy(gameObject);
+            // }
+
+			Health health = collider.gameObject.GetComponent<Health>();
+			if (health) {
+				health.ApplyDamage(Damage);
+				Destroy(gameObject);
+			}
         }
     }
 }

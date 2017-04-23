@@ -26,17 +26,20 @@ namespace SmallWorld
             GetComponent<Rigidbody>().velocity = Speed * directionToTarget;
         }
 
-        void OnCollisionEnter(Collision collision)
+        void OnTriggerEnter(Collider collider)
         {
-            bool collidedWithReceiver = (collision.gameObject.GetInstanceID() == Receiver.gameObject.GetInstanceID());
-            if (collidedWithReceiver)
+            if (collider.gameObject.GetInstanceID() == Receiver.gameObject.GetInstanceID())
             {
-                Receiver.ReceivePayLoad(this, PayLoadCapacity);
-                Destroy(gameObject);
-            }
-            else
-            {
-                Debug.LogWarningFormat("Transporter encountered unexpected collision. transporter: {0}, other: {1}", name, collision.gameObject.name);
+                bool collidedWithReceiver = (collider.gameObject.GetInstanceID() == Receiver.gameObject.GetInstanceID());
+                if (collidedWithReceiver)
+                {
+                    Receiver.ReceivePayLoad(this, PayLoadCapacity);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Transporter encountered unexpected collision. transporter: {0}, other: {1}", name, collider.gameObject.name);
+                }
             }
         }
     }
