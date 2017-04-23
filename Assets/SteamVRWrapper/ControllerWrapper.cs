@@ -79,14 +79,9 @@ public class ControllerWrapper : SteamVR_TrackedController {
         {
             //   by default, vector is printed with 1 floating point decimal, which is terribly incaurate.That's why "F2" is given in parameter.
             Vector2 touchPos = controller.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad);
-                Debug.Log("pad touched:" + touchPos.ToString("F2"));
-
-            Debug.Log("pad touch begin" + initialTouchCoordinates.ToString("F2"));
             float deltaX = touchPos.x;
             float padPositionXNormalizedTo10 = ((deltaX + 1) * 5.0f); // 0..10
 
-            Debug.LogError("pad debug val" + padPositionXNormalizedTo10);
-            Debug.LogError("pad debug color" + transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color);
             //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
            // Material spawnableElementPlaceMaterial = transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material;
             if (padPositionXNormalizedTo10<=2.5)
@@ -210,7 +205,6 @@ public class ControllerWrapper : SteamVR_TrackedController {
     Vector2 initialTouchCoordinates;
     public override void OnPadTouched(ClickedEventArgs e) // when did touched (i.e. wasn't touched before and now is, it's not continuous)
     {
-        Debug.LogError("!"+e.padX);
         base.OnPadTouched(e);
         isTouched = true;
         initialTouchCoordinates = new Vector2(e.padX, e.padY);
@@ -240,4 +234,11 @@ public class ControllerWrapper : SteamVR_TrackedController {
         if(!this.is_left)
         mobject = parentObject.GetComponent<ManipulableObject>();
     }
+
+    public void OnHealthChanged(int val)
+    {
+        if (!is_left)
+            text.text = "" + val;
+    }
+    public TextMesh text;
 }
