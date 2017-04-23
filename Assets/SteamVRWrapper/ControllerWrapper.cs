@@ -14,7 +14,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     Vector3 savedControllerPosition;
     Vector3 savedControllersDistance;
 
-    public ManipulableObject mobject;
+    private ManipulableObject mobject;
 
     IEnumerator LongVibration(float length, float strength)
     {
@@ -123,7 +123,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public bool triggerHold = false;
     public bool is_gripped;
 
-    public Vector2 savedTouchCoordinates;
+    private Vector2 savedTouchCoordinates;
 
     public override void OnTriggerClicked(ClickedEventArgs e)
     {
