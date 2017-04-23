@@ -13,7 +13,7 @@ namespace SmallWorld
         [Tooltip("Receives messages (Const)")]
         public GameObject Listener;
 
-        public bool CreateEntity(GameObject gameObjectPrefab, Vector3 position)
+        public bool CreateEntity(GameObject gameObjectPrefab, Vector3 position)// prefab: mass miner or canon
         {
             bool success;
 

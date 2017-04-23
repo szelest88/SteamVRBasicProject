@@ -85,7 +85,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
             //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
            // Material spawnableElementPlaceMaterial = transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material;
             if (padPositionXNormalizedTo10<=2.5)
-                colorToSpawn = Color.red; //SetColor("_Color", Color.red);
+                colorToSpawn = Color.yellow; //SetColor("_Color", Color.red);
             else if(padPositionXNormalizedTo10<=5)
                 colorToSpawn = Color.green; //SetColor("_Color", Color.red);
             else if(padPositionXNormalizedTo10<=7.5)
@@ -172,34 +172,29 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         base.OnSteamClicked(e);
     }
-    public GameObject spawnableElement1, spawnableElement2;
+    public GameObject spawnableElementCannon, spawnableElementMassMiner;
     public GameObject parentObject;
-    GameObject spawnedObject;
+
+    public SmallWorld.GameController gameController;
+
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
-        if(spawnedObjectType == ObjectType.Digger)
-        spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
-       else
-            spawnedObject = Instantiate(spawnableElement2, transform.position, Quaternion.identity, transform.transform);
 
-        spawnedObject.GetComponent<MeshRenderer>().material.color = colorToSpawn;
-        //spawnedObject.
-        //if (chosenPadPositionX <= 2.5)
-        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
-        //else if (chosenPadPositionX <= 5)
-        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
-        //else if (chosenPadPositionX <= 7.5)
-        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
-        //else if (chosenPadPositionX <= 10)
-        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
+        //TODO: replace with gameController::createEntity
+
+
+        
+        if (spawnedObjectType == ObjectType.Digger)
+            gameController.CreateEntity(spawnableElementMassMiner, transform.position);
+        if (spawnedObjectType == ObjectType.Shooter)
+            gameController.CreateEntity(spawnableElementCannon, transform.position);
 
     }
 
     public override void OnPadUnclicked(ClickedEventArgs e)
     {
         base.OnPadUnclicked(e);
-        spawnedObject.transform.SetParent(GameObject.Find("GameController/Base").transform);
     }
     bool isTouched;
     Vector2 initialTouchCoordinates;
