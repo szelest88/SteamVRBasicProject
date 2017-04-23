@@ -18,7 +18,6 @@ namespace SmallWorld
         {
             Target = target;
 
-            // TODO: Seek target better
             var directionToTarget = (target.transform.position - transform.position).normalized;
             GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToTarget);
             GetComponent<Rigidbody>().velocity = Speed * directionToTarget;
@@ -27,6 +26,20 @@ namespace SmallWorld
         void Start()
         {
 
+        }
+
+        void Update()
+        {
+            if (Target)
+            {
+                var directionToTarget = (Target.transform.position - transform.position).normalized;
+                GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToTarget);
+
+                GetComponent<Rigidbody>().AddForce(Speed * directionToTarget, ForceMode.Impulse);
+                // GetComponent<Rigidbody>().velocity = Speed * directionToTarget;
+            } else {
+				Destroy(gameObject);
+			}
         }
 
         void OnCollisionEnter(Collision collision)

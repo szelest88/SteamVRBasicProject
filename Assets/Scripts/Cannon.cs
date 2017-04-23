@@ -23,6 +23,8 @@ namespace SmallWorld
         [Tooltip("Bullet prefab (Const)")]
         public Bullet BulletPrefab;
 
+		[Tooltip("Cannon mesh (Cosnt)")]
+		public GameObject CannonBody;
         [Tooltip("Cannon radar (Const)")]
         public CanonRadar CannonRadar;
 
@@ -41,13 +43,14 @@ namespace SmallWorld
 
         void Start()
         {
+			StartCoroutine(Shoot());
         }
 
         void Update()
         {
 			if (CannonRadar.TargetCurrent) {
 				var directionToTarget = (transform.position - CannonRadar.TargetCurrent.transform.position).normalized;
-				GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToTarget);
+				CannonBody.transform.rotation = Quaternion.LookRotation(directionToTarget);
 			}
         }
 
@@ -65,6 +68,7 @@ namespace SmallWorld
                         Quaternion.identity,
                         transform
                     );
+					Physics.IgnoreCollision(GetComponent<Collider>(), CannonRadar.TargetCurrent.GetComponent<Collider>());
 
                     EnergyStorage.PayLoadCurrent -= EnergyCostPerShoot;
                     MassStorage.PayLoadCurrent -= MassCostPerShoot;
