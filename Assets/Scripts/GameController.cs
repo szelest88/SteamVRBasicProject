@@ -10,9 +10,12 @@ namespace SmallWorld
         [Tooltip("Main Base (Const)")]
         public Health Base;
 
+        [Tooltip("Receives messages (Const)")]
+        public GameObject Listener;
+
         public bool CreateEntity(GameObject gameObjectPrefab, Vector3 position)
         {
-			bool success;
+            bool success;
 
             if (gameObjectPrefab.GetComponent<Cannon>() != null)
             {
@@ -48,7 +51,7 @@ namespace SmallWorld
                 throw new System.ArgumentException(string.Format("Unsupported game object prefab. gameObjectPrefab: {0}", gameObjectPrefab));
             }
 
-			return success;
+            return success;
         }
 
         EnergySupplier FindNearestEnergySupplierToPosition(Vector3 position)
@@ -104,7 +107,10 @@ namespace SmallWorld
         {
             if (Base)
             {
-                SendMessage("OnHealthChanged", Base.HealthCurrent, SendMessageOptions.DontRequireReceiver);
+                if (Listener != null)
+                {
+                    Listener.SendMessage("OnHealthChanged", Base.HealthCurrent, SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
     }
