@@ -9,19 +9,31 @@ namespace SmallWorld
         [Tooltip("Radar current target (Var ReadOnly)")]
         public Health TargetCurrent;
 
-        void OnCollisionEnter(Collision collision)
+		private bool trackingTarget;
+
+        void Update()
         {
-            if (TargetCurrent == null)
+			if (trackingTarget && TargetCurrent == null) {
+				TargetCurrent = null;
+				trackingTarget = false;
+			}
+        }
+
+        void OnTriggerEnter(Collider collider)
+        {
+            if (!trackingTarget)
             {
-                TargetCurrent = collision.gameObject.GetComponent<Health>();
+                TargetCurrent = collider.gameObject.GetComponent<Health>();
+				trackingTarget = true;
             }
         }
 
-        void OnCollisionExit(Collision collision)
+        void OnTriggerExit(Collider collider)
         {
-            if (TargetCurrent != null && TargetCurrent.gameObject.GetInstanceID() == collision.gameObject.GetInstanceID())
+            if (trackingTarget && TargetCurrent.gameObject.GetInstanceID() == collider.gameObject.GetInstanceID())
             {
                 TargetCurrent = null;
+				trackingTarget = false;
             }
         }
     }

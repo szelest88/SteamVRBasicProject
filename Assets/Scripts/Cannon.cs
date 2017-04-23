@@ -21,36 +21,37 @@ namespace SmallWorld
         [Tooltip("Energy storage (Const)")]
         public EnergyStorage EnergyStorage;
         [Tooltip("Bullet prefab (Const)")]
-		public Bullet BulletPrefab;
+        public Bullet BulletPrefab;
 
-		[Tooltip("Cannon radar (Const)")]
-		public CanonRadar CannonRadar;
+		[Tooltip("Cannon mesh (Cosnt)")]
+		public GameObject CannonBody;
+        [Tooltip("Cannon radar (Const)")]
+        public CanonRadar CannonRadar;
 
-		public static void CreateAtPosition(Cannon cannonPrefab, Vector3 position, Transform parent, EnergySupplier energySupplier, MassSupplier massSupplier) {
-			Cannon cannon = GameObject.Instantiate(
-				cannonPrefab,
-				position,
-				Quaternion.identity,
-				parent
-			);
+        public static void CreateAtPosition(Cannon cannonPrefab, Vector3 position, Transform parent, EnergySupplier energySupplier, MassSupplier massSupplier)
+        {
+            Cannon cannon = GameObject.Instantiate(
+                cannonPrefab,
+                position,
+                Quaternion.identity,
+                parent
+            );
 
-			energySupplier.Receivers.Add(cannon.GetComponent<EnergyStorage>());
-			massSupplier.Receivers.Add(cannon.GetComponent<MassStorage>());
-		}
+            energySupplier.Receivers.Add(cannon.GetComponent<EnergyStorage>());
+            massSupplier.Receivers.Add(cannon.GetComponent<MassStorage>());
+        }
 
         void Start()
         {
+			StartCoroutine(Shoot());
         }
 
-        void OnEnemyActivityDected(Enemy enemy)
+        void Update()
         {
-            var directionToEnemy = (enemy.transform.position - this.transform.position).normalized;
-            GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToEnemy);
-        }
-
-        void OnEnemyActivityCeased(Enemy enemy)
-        {
-
+			if (CannonRadar.TargetCurrent) {
+				var directionToTarget = (transform.position - CannonRadar.TargetCurrent.transform.position).normalized;
+				CannonBody.transform.rotation = Quaternion.LookRotation(directionToTarget);
+			}
         }
 
         IEnumerator Shoot()
@@ -67,11 +68,12 @@ namespace SmallWorld
                         Quaternion.identity,
                         transform
                     );
+					Physics.IgnoreCollision(GetComponent<Collider>(), CannonRadar.TargetCurrent.GetComponent<Collider>());
 
                     EnergyStorage.PayLoadCurrent -= EnergyCostPerShoot;
                     MassStorage.PayLoadCurrent -= MassCostPerShoot;
 
-					bullet.SeekTarget(CannonRadar.TargetCurrent);
+                    bullet.SeekTarget(CannonRadar.TargetCurrent);
                 }
 
                 yield return new WaitForSeconds(ShootingIntervalInSec);
