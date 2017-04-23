@@ -86,6 +86,7 @@ namespace SmallWorld
                                     Quaternion.identity,
                                     transform);
                                 transporter.name = string.Format("{0}#Transporter{1}", name, numOfSentTransporters);
+                                Physics.IgnoreCollision(GetComponent<Collider>(), transporter.GetComponent<Collider>());
 
                                 transporter.SendToReceiverWithPayLoad(receiver);
                                 PayLoadSource.PayLoadCurrent -= transporter.PayLoadCapacity;
