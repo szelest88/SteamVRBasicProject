@@ -47,6 +47,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public enum EnumKolor { Green, Red, Blue };
     public enum ObjectType { Digger, Shooter};
     ObjectType spawnedObjectType;
+    Color colorToSpawn;
     float chosenPadPositionX;
     // Update is called once per frame
     protected override void Update () {
@@ -86,21 +87,28 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
             Debug.LogError("pad debug val" + padPositionXNormalizedTo10);
             Debug.LogError("pad debug color" + transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color);
-          //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
+            //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
+           // Material spawnableElementPlaceMaterial = transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material;
             if (padPositionXNormalizedTo10<=2.5)
-                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
+                colorToSpawn = Color.red; //SetColor("_Color", Color.red);
             else if(padPositionXNormalizedTo10<=5)
-                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
+                colorToSpawn = Color.green; //SetColor("_Color", Color.red);
             else if(padPositionXNormalizedTo10<=7.5)
-                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
+                colorToSpawn = Color.blue; //SetColor("_Color", Color.red);
             else if(padPositionXNormalizedTo10<=10)
-                transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
+                colorToSpawn = Color.white; //SetColor("_Color", Color.red);
             chosenPadPositionX = padPositionXNormalizedTo10;
 
+            transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = colorToSpawn;
+
+            transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.GetComponent<MeshRenderer>().material.color = colorToSpawn;
+            //  colorToSpawn = spawnableElementPlaceMaterial.color;
             if (padPositionXNormalizedTo10 < 5 && spawnedObjectType!=ObjectType.Digger)
             {
                 spawnedObjectType = ObjectType.Digger; // show it
+
                 transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(true);
+
                 transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.SetActive(false);
 
 
@@ -109,14 +117,12 @@ public class ControllerWrapper : SteamVR_TrackedController {
             {
                 spawnedObjectType = ObjectType.Shooter;
                 transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(false);
+
                 transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.SetActive(true);
 
+
             }
-            //if (deltaX < 0)
-            //    transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
-            //else
-            //    transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.green;// SetColor("_Color", Color.green);
-            // rotate something of delta
+
         }
     }
     public bool triggerHold = false;
@@ -187,15 +193,17 @@ public class ControllerWrapper : SteamVR_TrackedController {
        else
             spawnedObject = Instantiate(spawnableElement2, transform.position, Quaternion.identity, transform.transform);
 
+        spawnedObject.GetComponent<MeshRenderer>().material.color = colorToSpawn;
         //spawnedObject.
-        if (chosenPadPositionX <= 2.5)
-            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
-        else if (chosenPadPositionX <= 5)
-            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
-        else if (chosenPadPositionX <= 7.5)
-            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
-        else if (chosenPadPositionX <= 10)
-            spawnedObject.GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
+        //if (chosenPadPositionX <= 2.5)
+        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
+        //else if (chosenPadPositionX <= 5)
+        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
+        //else if (chosenPadPositionX <= 7.5)
+        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
+        //else if (chosenPadPositionX <= 10)
+        //    spawnedObject.GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
+
     }
 
     public override void OnPadUnclicked(ClickedEventArgs e)
