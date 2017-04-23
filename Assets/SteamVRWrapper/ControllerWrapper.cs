@@ -47,7 +47,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public enum EnumKolor { Green, Red, Blue };
     public enum ObjectType { Digger, Shooter};
     ObjectType spawnedObjectType;
-    float colorVal;
+    float chosenPadPositionX;
     // Update is called once per frame
     protected override void Update () {
         base.Update();
@@ -82,30 +82,30 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
             Debug.Log("pad touch begin" + initialTouchCoordinates.ToString("F2"));
             float deltaX = touchPos.x;
-            float val = ((deltaX + 1) * 5.0f);
+            float padPositionXNormalizedTo10 = ((deltaX + 1) * 5.0f); // 0..10
 
-            Debug.LogError("pad debug val" + val);
+            Debug.LogError("pad debug val" + padPositionXNormalizedTo10);
             Debug.LogError("pad debug color" + transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color);
           //  transform.FindChild("SpawnableElementPlace").transform.localScale = new Vector3(val/10.0f, val / 10.0f, val / 10.0f);// = val;
-            if (val<=2.5)
+            if (padPositionXNormalizedTo10<=2.5)
                 transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
-            else if(val<=5)
+            else if(padPositionXNormalizedTo10<=5)
                 transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
-            else if(val<=7.5)
+            else if(padPositionXNormalizedTo10<=7.5)
                 transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
-            else if(val<=10)
+            else if(padPositionXNormalizedTo10<=10)
                 transform.FindChild("SpawnableElementPlace").GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
-            colorVal = val;
+            chosenPadPositionX = padPositionXNormalizedTo10;
 
-            if (val < 5)
+            if (padPositionXNormalizedTo10 < 5 && spawnedObjectType!=ObjectType.Digger)
             {
-                spawnedObjectType = ObjectType.Digger;
+                spawnedObjectType = ObjectType.Digger; // show it
                 transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(true);
                 transform.FindChild("SpawnableElementPlace").GetChild(1).gameObject.SetActive(false);
 
 
             }
-            else
+            if(padPositionXNormalizedTo10 >= 5 && spawnedObjectType!=ObjectType.Shooter)
             {
                 spawnedObjectType = ObjectType.Shooter;
                 transform.FindChild("SpawnableElementPlace").GetChild(0).gameObject.SetActive(false);
@@ -182,19 +182,19 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
-        if(colorVal<5)
+        if(chosenPadPositionX<5)
         spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
        else
             spawnedObject = Instantiate(spawnableElement2, transform.position, Quaternion.identity, transform.transform);
 
         //spawnedObject.
-        if (colorVal <= 2.5)
+        if (chosenPadPositionX <= 2.5)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.red; //SetColor("_Color", Color.red);
-        else if (colorVal <= 5)
+        else if (chosenPadPositionX <= 5)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.green; //SetColor("_Color", Color.red);
-        else if (colorVal <= 7.5)
+        else if (chosenPadPositionX <= 7.5)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.blue; //SetColor("_Color", Color.red);
-        else if (colorVal <= 10)
+        else if (chosenPadPositionX <= 10)
             spawnedObject.GetComponent<MeshRenderer>().material.color = Color.white; //SetColor("_Color", Color.red);
     }
 
