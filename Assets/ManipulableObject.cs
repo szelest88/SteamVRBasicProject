@@ -14,7 +14,7 @@ public class ManipulableObject : MonoBehaviour {
         scalingmode = false;
        // left.gameObject.transform.
     }
-	
+   public  float initialDistance;
 	// Update is called once per frame
 	void Update () {
 
@@ -37,6 +37,14 @@ public class ManipulableObject : MonoBehaviour {
 
         if (left.is_gripped && right.is_gripped)
         {
+
+            if (!this.scalingmode)
+            {
+                // began scaling
+
+                initialDistance = (right.transform.position - left.transform.position).magnitude/transform.localScale.x;
+                Debug.LogError("initialDistance set to " + initialDistance);
+            }
             this.scalingmode = true;
         }
         else

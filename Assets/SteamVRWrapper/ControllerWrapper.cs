@@ -14,7 +14,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     Vector3 savedControllerPosition;
     Vector3 savedControllersDistance;
 
-    private ManipulableObject mobject;
+    public ManipulableObject mobject;
 
     IEnumerator LongVibration(float length, float strength)
     {
@@ -49,22 +49,23 @@ public class ControllerWrapper : SteamVR_TrackedController {
     ObjectType spawnedObjectType;
     Color colorToSpawn;
     float chosenPadPositionX;
+    bool triggerPreviouslyHold = false;
+    public ControllerWrapper otherController;
     // Update is called once per frame
     protected override void Update () {
         base.Update();
 
 
-        if(triggerHold)
+        if(triggerHold && !triggerPreviouslyHold)
         {
-         //   if(mobject!=null) // uncomment to enable translation
-         //   mobject.posToSet = (controller.transform.pos - savedControllerPosition);
+
         }
         if (mobject!=null && mobject.scalingmode)
         {
             
             float distance = (mobject.left.transform.position - mobject.right.transform.position).magnitude;
-            parentObject.transform.localScale = new Vector3(distance, distance, distance);
-            Debug.LogError(distance);
+            parentObject.transform.localScale = new Vector3(distance/mobject.initialDistance, distance/ mobject.initialDistance, distance/mobject.initialDistance);
+
         }
 
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
@@ -226,8 +227,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
 
     public void Awake()
     {
-        if(!this.is_left)
-        mobject = parentObject.GetComponent<ManipulableObject>();
+      //  if(!this.is_left)
+      //  mobject = parentObject.GetComponent<ManipulableObject>();
     }
 
     public void OnHealthChanged(uint val)
