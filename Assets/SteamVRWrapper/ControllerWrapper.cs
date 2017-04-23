@@ -136,7 +136,6 @@ public class ControllerWrapper : SteamVR_TrackedController {
             triggerHold = true;
         if(mobject!=null)
         savedControllerPosition = controller.transform.pos;
-        Debug.LogError("saved position:" + savedControllerPosition.ToString("F4"));
     }
 
     public void setCollision(Collider collision)
