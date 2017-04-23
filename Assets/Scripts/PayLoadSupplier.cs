@@ -6,13 +6,14 @@ using UnityEngine;
 
 namespace SmallWorld
 {
-    public class PayLoadSupplier : MonoBehaviour
+    public class PayLoadSupplier<PayLoadStorageType> : MonoBehaviour
+        where PayLoadStorageType : PayLoadStorage
     {
         public float BroadcastInterval;
 
-        public PayLoadStorage PayLoadSource;
+        public PayLoadStorageType PayLoadSource;
 
-        public List<PayLoadStorage> Receivers = new List<PayLoadStorage>();
+        public List<PayLoadStorageType> Receivers = new List<PayLoadStorageType>();
 
         public Transporter TransporterPrefab;
 
@@ -50,6 +51,7 @@ namespace SmallWorld
                                 }
                             }
 
+                            // FIXME: Fix uint problem !!!
                             receiverRemainingPayLoadNeed = Math.Max(receiver.PayLoadNeeded - payloadForReceiverInTransport, 0);
                         }
                         else
@@ -60,7 +62,7 @@ namespace SmallWorld
                         receiversRemainingPayLoadNeed[i] = receiverRemainingPayLoadNeed;
                     }
 
-                    List<PayLoadStorage> receiversSortedByPayLoadNeed = new List<PayLoadStorage>(Receivers);
+                    List<PayLoadStorageType> receiversSortedByPayLoadNeed = new List<PayLoadStorageType>(Receivers);
                     receiversSortedByPayLoadNeed.Sort((r1, r2) =>
                     {
                         var r1RemainingPayLoadNeed = receiversRemainingPayLoadNeed[Receivers.IndexOf(r1)];
@@ -68,7 +70,7 @@ namespace SmallWorld
                         return r1RemainingPayLoadNeed.CompareTo(r2RemainingPayLoadNeed) * -1;
                     });
 
-                    foreach (PayLoadStorage receiver in receiversSortedByPayLoadNeed)
+                    foreach (PayLoadStorageType receiver in receiversSortedByPayLoadNeed)
                     {
                         if (receiver.PayLoadNeeded > 0)
                         {

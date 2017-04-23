@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - Broadcaster
+  - Base
   - Transporter
-  - Receiver
-  - 
-  - 
-  - 
-  - 
+  - MassMiner
+  - Cannon
+  - Bullet
+  - Enemy
+  - CannonRadar
   - 
   - 
   - 

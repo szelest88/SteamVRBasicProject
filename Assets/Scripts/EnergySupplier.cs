@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SmallWorld {
-    public class EnergySupplier : PayLoadSupplier {
+    public class EnergySupplier : PayLoadSupplier<EnergyStorage> {
         public EnergySupplier() {
         }
     }
