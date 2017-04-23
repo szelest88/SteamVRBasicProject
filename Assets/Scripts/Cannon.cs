@@ -26,6 +26,18 @@ namespace SmallWorld
 		[Tooltip("Cannon radar (Const)")]
 		public CanonRadar CannonRadar;
 
+		public static void CreateAtPosition(Cannon cannonPrefab, Vector3 position, Transform parent, EnergySupplier energySupplier, MassSupplier massSupplier) {
+			Cannon cannon = GameObject.Instantiate(
+				cannonPrefab,
+				position,
+				Quaternion.identity,
+				parent
+			);
+
+			energySupplier.Receivers.Add(cannon.GetComponent<EnergyStorage>());
+			massSupplier.Receivers.Add(cannon.GetComponent<MassStorage>());
+		}
+
         void Start()
         {
         }

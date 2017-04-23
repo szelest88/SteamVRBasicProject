@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114425503005580506}
   - component: {fileID: 114073839513489956}
   - component: {fileID: 114787285878815438}
+  - component: {fileID: 114522435889109138}
   m_Layer: 10
   m_Name: MassMiner
   m_TagString: Untagged
@@ -144,6 +145,17 @@ MonoBehaviour:
   PayLoadType: 1
   PayLoadMax: 100
   PayLoadCurrent: 0
+--- !u!114 &114522435889109138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403748788235648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe546697efb7f7648a1c3dc5ffb6c394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114787285878815438
 MonoBehaviour:
   m_ObjectHideFlags: 1
