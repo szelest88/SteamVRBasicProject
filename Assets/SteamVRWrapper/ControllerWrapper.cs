@@ -235,10 +235,11 @@ public class ControllerWrapper : SteamVR_TrackedController {
         mobject = parentObject.GetComponent<ManipulableObject>();
     }
 
-    public void OnHealthChanged(int val)
+    public void OnHealthChanged(uint val)
     {
+        Debug.LogError("HEALTH CHANGED!");
         if (!is_left)
-            text.text = "" + val;
+            text.text = ""+val;
     }
     public TextMesh text;
 }
