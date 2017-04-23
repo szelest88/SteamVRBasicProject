@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4088647474204078}
   - component: {fileID: 33140179040677648}
   - component: {fileID: 23629922360717116}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: mass_miner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1403748788235648}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.75

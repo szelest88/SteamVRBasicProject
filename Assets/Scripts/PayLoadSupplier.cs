@@ -82,7 +82,7 @@ namespace SmallWorld
                             {
                                 Transporter transporter = UnityEngine.Object.Instantiate(
                                     TransporterPrefab,
-                                    Vector3.zero,
+                                    transform.position,
                                     Quaternion.identity,
                                     transform);
                                 transporter.name = string.Format("{0}#Transporter{1}", name, numOfSentTransporters);

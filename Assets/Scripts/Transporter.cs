@@ -22,7 +22,7 @@ namespace SmallWorld
             var directionToTarget = (receiver.transform.position - this.transform.position).normalized;
             Debug.LogFormat("Receiver pos: {0}, transporter pos: {1}", receiver.transform.position, this.transform.position);
 
-            transform.rotation = Quaternion.LookRotation(directionToTarget);
+            GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToTarget);
             GetComponent<Rigidbody>().velocity = Speed * directionToTarget;
         }
 
