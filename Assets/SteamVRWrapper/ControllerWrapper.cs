@@ -188,7 +188,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     public override void OnPadClicked(ClickedEventArgs e)
     {
         base.OnPadClicked(e);
-        if(chosenPadPositionX<5)
+        if(spawnedObjectType == ObjectType.Digger)
         spawnedObject = Instantiate(spawnableElement1, transform.position, Quaternion.identity, transform.transform);
        else
             spawnedObject = Instantiate(spawnableElement2, transform.position, Quaternion.identity, transform.transform);
