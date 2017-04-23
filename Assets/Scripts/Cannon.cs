@@ -54,12 +54,11 @@ namespace SmallWorld
             {
                 var directionToTarget = (transform.position - CannonRadar.TargetCurrent.transform.position).normalized;
                 CannonBody.transform.rotation = Quaternion.LookRotation(directionToTarget);
-
-
+				ShootIfPossibleAndReload();
             }
         }
 
-        void ShootAndReload()
+        void ShootIfPossibleAndReload()
         {
             var shootPossible = CannonReady && CannonRadar.TargetCurrent != null && EnergyStorage.PayLoadCurrent >= EnergyCostPerShoot && MassStorage.PayLoadCurrent >= MassCostPerShoot;
 
