@@ -36,7 +36,6 @@ namespace SmallWorld
                 GetComponent<Rigidbody>().rotation = Quaternion.LookRotation(directionToTarget);
 
                 GetComponent<Rigidbody>().AddForce(Speed * directionToTarget, ForceMode.Impulse);
-                // GetComponent<Rigidbody>().velocity = Speed * directionToTarget;
             } else {
 				Destroy(gameObject);
 			}
