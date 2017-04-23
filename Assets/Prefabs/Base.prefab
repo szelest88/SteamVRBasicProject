@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4678078306449084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: generator_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4368278011137312}
   - component: {fileID: 33879651748770518}
   - component: {fileID: 23516491558835474}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4277438185558592}
   - component: {fileID: 33587906292450044}
   - component: {fileID: 23017654572938770}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4510918199969776}
   - component: {fileID: 33271170644348266}
   - component: {fileID: 23973722888341582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 4600995029285692}
   - component: {fileID: 33215040719275778}
   - component: {fileID: 23160893022125760}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4788384382557404}
   - component: {fileID: 33864094603740688}
   - component: {fileID: 23326711502658852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 4181062498894832}
   - component: {fileID: 33729332836387846}
   - component: {fileID: 23677696431899328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 4557048442533356}
   - component: {fileID: 33399086019698144}
   - component: {fileID: 23082911466089652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4105429475000988}
   - component: {fileID: 33672931310921846}
   - component: {fileID: 23124716566219952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torus04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
