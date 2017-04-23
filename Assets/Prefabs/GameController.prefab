@@ -331,7 +331,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1415168936422050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4207455434447368}
@@ -913,7 +913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawningIntervalInSec: 5
-  SpawningRadius: 100
+  SpawningRadius: 10
   SpawnedObjectPrefab: {fileID: 114496554112117760, guid: c1b41a6267bd6ae4da5f835a5bd433bd,
     type: 2}
   InitialTarget: {fileID: 114114896272666534}

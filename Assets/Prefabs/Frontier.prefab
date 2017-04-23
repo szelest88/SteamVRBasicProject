@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawningIntervalInSec: 5
-  SpawningRadius: 100
+  SpawningRadius: 10
   SpawnedObjectPrefab: {fileID: 114496554112117760, guid: c1b41a6267bd6ae4da5f835a5bd433bd,
     type: 2}
   InitialTarget: {fileID: 0}
