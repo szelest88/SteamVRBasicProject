@@ -63,7 +63,8 @@ public class ControllerWrapper : SteamVR_TrackedController {
         if (mobject!=null && mobject.scalingmode)
         {
             float distance = (mobject.left.transform.position - mobject.right.transform.position).magnitude;
-            mobject.transform.localScale = new Vector3(distance, distance, distance);
+            parentObject.transform.localScale = new Vector3(distance, distance, distance);
+            Debug.LogError(distance);
         }
 
         //Debug.LogError("triggerhold" + ((is_left ? "left" : "right") + ":" + triggerHold));
@@ -163,9 +164,7 @@ public class ControllerWrapper : SteamVR_TrackedController {
     {
         base.OnTriggerUnclicked(e);
         triggerHold = false;
-      //  if (isInCollision)
-            mobject.posToSet = (controller.transform.pos - savedControllerPosition);
-    //    mobject.initialPosition = mobject.transform.position;//local?
+         //   mobject.posToSet = (controller.transform.pos - savedControllerPosition); //  BAD
     }
 
     public override void OnMenuClicked(ClickedEventArgs e)
